@@ -25,5 +25,5 @@ To download the latest OVR SDK, go [here](https://developer.oculus.com/downloads
 
 For more info on how to use the SDK, see [here](https://developer.oculus.com/documentation/pcsdk/latest/concepts/book-gsg/), or simply read the header files (they're quite nice!)
 
-
+The extension to more complex programs is for the most part straight forward in the simplest cases. Simply add regular rendering code in the per-eye loop and react to the controller and hmd state. 
 
