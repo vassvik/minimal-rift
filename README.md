@@ -19,9 +19,70 @@ The file `OculusRoomTiny/OculusRoomTiny (GL)/main.cpp`, which handles logic, is 
 
 This project was made to make it easier for others to get started, striving towards making the absolute minimal example that is still useful. This means it doesn't actually render any scene, as that's exactly the same as a regular renderer (which I assume most readers already know how to do decently well). 
 
+
+## Extensions
+
 The total line count is just short of 300 lines, consisting mostly of boilerplate, which means the extension to more complex programs is straight forward - simply render as normal inside the per-eye loop and react to the hmd and controller state. 
 
 The program is written in a straight forward sequential manner, which I hope is instructive. There are a few comments scattered around to give some context and links for further reading.
+
+For extending the program, consider looking at `ovr_GetEyePoses` for pose information (position and orientation) for the HMD, `ovr_GetTrackingState` for pose information for the controllers, and `ovr_GetInputState` to get controller input state (buttons, sticks). The orientations are regular quaternions. See `ovrMatrix4f_Projection` to get the perspective projection matrices per eye, and consider using the quaternions directly instead of a view matrix. 
+
+A simple vertex shader might look something like this: 
+```glsl
+#version 430 core
+
+// vertex attribs
+layout(location = 0) in vec3 vertexPosition;
+layout(location = 1) in vec3 vertexNormal;
+layout(location = 2) in vec2 vertexUV;
+
+// passthrough
+out vec2 TexCoords;
+out vec3 WorldPos;
+out vec3 Normal;
+
+// uniforms
+// p = position, q = quaternion
+uniform vec3 p_hmd;
+uniform vec4 q_hmd;
+
+uniform vec4 q_model;
+uniform vec3 p_model;
+
+uniform mat4 P; // perspective projection matrix, per-eye
+
+// quaternion helpers
+vec3 qrot(vec3 p, vec4 q) { 
+    // http://www.geeks3d.com/20141201/how-to-rotate-a-vertex-by-a-quaternion-in-glsl/
+    return p + 2.0 * cross(q.xyz, cross(q.xyz, p) + q.w * p);
+}
+
+vec4 qconj(vec4 q) { 
+    return vec4(-q.xyz, q.w); 
+}
+
+void main() {
+    // model space
+    vec3 v = vertexPosition;
+
+    // model to world space (e.g. controller models), 
+    // first apply rotation in model-space then translate
+    v = qrot(v, q_model) + p_model;
+
+    // passthrough to fragment shader, in world space
+    TexCoords = vertexUV;
+    Normal = qrot(vertexNormal, q_model);
+    WorldPos = v;
+
+    // world space to camera space, 
+    // first move the camera to the origin then rotate
+    v = qrot(v - p_hmd, qconj(q_hmd));
+
+    // output, view space to clip space
+    gl_Position = P*vec4(v, 1.0);
+}
+```
 
 
 ## Notes
