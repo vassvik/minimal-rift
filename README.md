@@ -2,7 +2,7 @@
 
 We use the Oculus Rift SDK to create a minimal example of rendering an image to a VR headset. The end result will be a simple image with different colors per eye, which looks like the following:
 
-![Screenshot][https://i.imgur.com/Q9i0yyA.png]
+![Screenshot](https://i.imgur.com/Q9i0yyA.png)
 
 
 ## Build instructions
