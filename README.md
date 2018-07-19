@@ -30,9 +30,6 @@ The program is written in a straight forward sequential manner. There are a few 
 
 
 ## Dependencies
-All dependencies are bundled for simplicity. All license notices are supplied in `THIRD_PARTY_NOTICES.txt`. 
 
-	- [GLFW](https://github.com/elmindreda/glfw) (version 3.3.0)
-	- [glad](https://github.com/Dav1dde/glad) (4.3 core loader from the web interface, https://github.com/Dav1dde/glad)
-	- [The Oculus Software Development Kit](https://developer.oculus.com/downloads/package/oculus-sdk-for-windows/) (version 1.26)
+The dependencies of this project are [GLFW](https://github.com/elmindreda/glfw) version 3.3.0, [glad](https://github.com/Dav1dde/glad) 4.3 core loader from the [web interface](https://github.com/Dav1dde/glad), and the [The Oculus Software Development Kit](https://developer.oculus.com/downloads/package/oculus-sdk-for-windows/) version 1.26. All dependencies are bundled for simplicity. All license notices are supplied in `THIRD_PARTY_NOTICES.txt`. 
 
