@@ -231,8 +231,8 @@ int main() {
 
     	// get the latest hmd (and possibly controller) data
         // See: https://developer.oculus.com/documentation/pcsdk/latest/concepts/dg-sensor/#dg-sensor-head-tracking
-        ovr_GetEyePoses(session, frame_index, ovrTrue, &hmd_to_eye_pose[0], &layer.RenderPose[0], &layer.SensorSampleTime);
-        ovrTrackingState ts = ovr_GetTrackingState(session, 0, 1);
+        // ovr_GetEyePoses(session, frame_index, ovrTrue, &hmd_to_eye_pose[0], &layer.RenderPose[0], &layer.SensorSampleTime);
+        // ovrTrackingState ts = ovr_GetTrackingState(session, 0, 1);
 
         // render once for each eye
         for (int eye = 0; eye < ovrEye_Count; eye++) {
