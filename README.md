@@ -1,6 +1,8 @@
-# Minimal and straight forward OpenGL VR code using the OVR SDK
+# Minimal and straight forward OpenGL VR example using the Oculus SDK
 
-We use the Oculus Rift SDK to create a minimal example of rendering an image to a VR headset. The end result will be a simple image with different colors per eye, which looks like the following:
+We use the Oculus Rift SDK to create a minimal example of rendering an image to a VR headset from which it is simple to build more complex programs.
+
+The end result will be a simple image with different colors per eye, which looks like the following:
 
 ![Screenshot](https://i.imgur.com/Q9i0yyA.png)
 
