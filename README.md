@@ -26,6 +26,8 @@ For more info on how to use the SDK, see [here](https://developer.oculus.com/doc
 
 The extension to more complex programs is for the most part straight forward in the simplest cases. Simply add regular rendering code in the per-eye loop and react to the controller and hmd state. 
 
+The program is written in a straight forward sequential manner. There are a few comments scattered around to give some context.
+
 
 ## Dependencies
 All dependencies are bundled for simplicity. All license notices are supplied in `THIRD_PARTY_NOTICES.txt`. 
