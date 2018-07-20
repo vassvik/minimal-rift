@@ -89,7 +89,7 @@ void main() {
 
 To download the latest OVR SDK and samples, go [here](https://developer.oculus.com/downloads/package/oculus-sdk-for-windows/). 
 
-For more info on how to use the SDK, see [here](https://developer.oculus.com/documentation/pcsdk/latest/concepts/book-gsg/), or simply read the SDK header files (they're quite nice!)
+For more in-depth look on how to use the SDK, see [here](https://developer.oculus.com/documentation/pcsdk/latest/concepts/book-gsg/), or simply read the SDK header files (they're quite nice and descriptive!)
 
 
 ## Dependencies
