@@ -6,8 +6,8 @@
 #include <stdio.h>
 
 // 
-#include <glad/glad.c>
-#include <GLFW/glfw3.h>
+#include <glad/glad.c>  // includes glad.h and the OpenGL headers
+#include <GLFW/glfw3.h> 
 
 //
 #include <OVR/OVR_CAPI_GL.h> // includes OVR_CAPI.h
@@ -98,7 +98,7 @@ int main() {
     }
     printf("Loaded OpenGL functions\n");
 
-    // See // https://developer.oculus.com/documentation/pcsdk/latest/concepts/dg-render/#dg-render-initialize
+    // See https://developer.oculus.com/documentation/pcsdk/latest/concepts/dg-render/#dg-render-initialize
     ovrHmdDesc hmd_desc = ovr_GetHmdDesc(session);
 	if (0) print_hmd_desc(&hmd_desc);
 
