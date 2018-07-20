@@ -51,9 +51,107 @@ void print_hmd_desc(ovrHmdDesc *hmd_desc) {
 	printf("DisplayRefreshRate    = %f\n", hmd_desc->DisplayRefreshRate);
 }
 
-int main() {
-	// See https://developer.oculus.com/documentation/pcsdk/latest/concepts/dg-sensor/#dg_sensor
 
+#include <math.h>
+
+struct vec3 {
+	float x, y, z;
+
+	vec3(float x, float y, float z) : x(x), y(y), z(z) {}
+	vec3(float x) : x(x), y(x), z(x) {}
+	vec3() : x(0.0), y(0.0), z(0.0) {}
+
+};
+vec3 operator+(vec3 lhs, vec3 rhs) { return vec3(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z); }
+vec3 operator-(vec3 lhs, vec3 rhs) { return vec3(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z); }
+vec3 operator*(vec3 lhs, vec3 rhs) { return vec3(lhs.x * rhs.x, lhs.y * rhs.y, lhs.z * rhs.z); }
+vec3 operator/(vec3 lhs, vec3 rhs) { return vec3(lhs.x / rhs.x, lhs.y / rhs.y, lhs.z / rhs.z); }
+
+
+float dot(vec3 u, vec3 v) { return u.x*v.x + u.y*v.y + u.z*v.z; }
+vec3 cross(vec3 u, vec3 v) { return vec3(u.y*v.z - u.z*v.y, u.z*v.x - u.x*v.z, u.x*v.y - u.y*v.x); }
+vec3 normalize(vec3 v) { return v / sqrt(dot(v,v)); }
+
+void print_vec3(vec3 v) { printf("v = {%.8f, %.8f, %.8f}, |v| = %f\n", v.x, v.y, v.z, sqrt(dot(v, v))); }
+
+struct quat {
+	union {
+		struct {
+			float x, y, z;
+		};
+		struct {
+			vec3 xyz;
+		};
+	};
+	float w;
+	quat(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
+	quat(vec3 v, float w) : xyz(v), w(w) {}
+};
+
+auto print_quat = [](quat q) { printf("{%f, %f, %f, %f}\n", q.x, q.y, q.z, q.w); };
+
+int main() {
+
+	vec3 axis = vec3(1.0f/sqrtf(3.0f));
+	float angle = 45.0*3.1415/180.0;
+	vec3 p = vec3(1.0, -2.0, 3.0);
+
+	float c = cos(angle);
+	float s = sin(angle);
+	float ch = cos(angle/2.0);
+	float sh = sin(angle/2.0);
+
+	quat q = quat(sh*axis, ch);
+
+	//
+	print_vec3(p);
+
+	// from http://www.geeks3d.com/20141201/how-to-rotate-a-vertex-by-a-quaternion-in-glsl/
+	print_vec3(p + 2 * cross(q.xyz, cross(q.xyz, p) + q.w * p));
+
+	// in the following:
+	//     a = q.xyz, 
+	//     b = q.xyz, 
+	//     c = p 
+
+	// distribute: a x (b + c) = (a x b) + (a x c)
+	print_vec3(p + 2 * (cross(q.xyz, cross(q.xyz, p)) + cross(q.xyz, q.w * p)));
+
+	// scalar multiplication: a x (k * b) = k * (a x b)
+	print_vec3(p + 2 * (cross(q.xyz, cross(q.xyz, p)) + q.w * cross(q.xyz, p)));
+
+	// vector triple product: a x (b x c) = b (a · c) - c (a · b)
+	print_vec3(p + 2 * (q.xyz * dot(q.xyz, p) - p * dot(q.xyz, q.xyz) + q.w * cross(q.xyz, p))); 
+	
+	// q = (sin(t/2) * axis, cos(t/2)) 
+	// dot(q.xyz, q.xyz) = sin^2(t/2) 
+	//                   = 1 - cos^2(t/2) 
+	//                   = 1 - q.w*q.w
+	print_vec3(p + 2 * (q.xyz * dot(q.xyz, p) - p * (1.0 - q.w*q.w) + q.w * cross(q.xyz, p))); 
+	
+	// move inner p outside 
+	print_vec3(2 * (q.xyz * dot(q.xyz, p) + q.w * cross(q.xyz, p) + p * (q.w*q.w)) - p); 
+
+	// or, move outer p inside 
+	print_vec3(2 * (q.xyz * dot(q.xyz, p) + q.w * cross(q.xyz, p) - p * (0.5 - q.w*q.w))); 
+
+	printf("\n");
+
+	// bonus, using quat definition to go back to axis-angle
+	print_vec3(2 * (sh * sh * axis * dot(axis, p) + ch * sh * cross(axis, p) - p * (0.5 - ch * ch))); 
+
+	// trig substitution:
+	// sin^2(t/2) = (1 - cos(t))/2
+	// cos(t/2) sin(t/2) = sin(t)/2
+	// 1/2 - cos^2(t/2) = -cos(t)/2
+	print_vec3(2 * ((1 - c) / 2 * axis * dot(axis, p) + s / 2 * cross(axis, p) + p * c / 2)); 
+
+	// removing factor 2
+	print_vec3((1 - c) * axis * dot(axis, p) + s * cross(axis, p) + p * c); 
+
+	return 0;
+
+	// See https://developer.oculus.com/documentation/pcsdk/latest/concepts/dg-sensor/#dg_sensor
 	//
 	if (!OVR_SUCCESS(ovr_Initialize(nullptr))) {
         print_last_rift_error();
