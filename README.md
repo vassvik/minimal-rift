@@ -17,7 +17,7 @@ The OVR SDK contains several examples for how to use it, but the smallest exampl
 
 The file `OculusRoomTiny/OculusRoomTiny (GL)/main.cpp`, which handles logic, is 437 lines, and includes `OculusRoomTiny_Advanced/Common/Win32_GLAppUtil.h` which is 834 lines long! 
 
-This project was made to make it easier for others to get started, striving towards making the absolute minimal example that is still useful. This means it doesn't actually render any scene, as that's (for the most parT) exactly the same as a regular renderer (which I assume most readers are already familiar with). 
+This project was made to make it easier for others to get started, striving towards making the absolute minimal example that is still useful. This means it doesn't actually render any scene, as that's (for the most part) exactly the same as a regular renderer (which I assume most readers are already familiar with). 
 
 
 ## Extensions
