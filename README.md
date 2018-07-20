@@ -22,7 +22,7 @@ This project was made to make it easier for others to get started, striving towa
 
 ## Extensions
 
-The total line count is just short of 300 lines, consisting mostly of boilerplate, which means the extension to more complex programs is straight forward - simply render as normal inside the per-eye loop and react to the hmd and controller state. 
+The total line count is just short of 400 lines, consisting mostly of boilerplate, which means the extension to more complex programs is straight forward - simply render as normal inside the per-eye loop and react to the hmd and controller state. 
 
 The program is written in a straightforward sequential manner, which I hope is instructive. There are a few comments scattered around to give some context and links for further reading.
 
