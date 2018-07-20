@@ -26,7 +26,7 @@ The total line count is just short of 300 lines, consisting mostly of boilerplat
 
 The program is written in a straightforward sequential manner, which I hope is instructive. There are a few comments scattered around to give some context and links for further reading.
 
-For extending the program, consider looking at `ovr_GetEyePoses` for pose information (position and orientation) for the HMD, `ovr_GetTrackingState` for pose information for the controllers, and `ovr_GetInputState` to get controller input state (buttons, sticks). The orientations are regular quaternions. See `ovrMatrix4f_Projection` to get the perspective projection matrices per eye, and consider using the quaternions directly instead of a view matrix. 
+For extending the program, consider looking at `ovr_GetEyePoses` for pose information (position and orientation) for the HMD, `ovr_GetTrackingState` for pose information for the controllers, and `ovr_GetInputState` to get controller input state (buttons, sticks). The orientations are regular quaternions. See `ovrMatrix4f_Projection` to get the perspective projection matrices per eye. Consider using the quaternions from the SDK directly instead of a view matrix, for simplicity and clarity. 
 
 A simple vertex shader might look something like this: 
 ```glsl
